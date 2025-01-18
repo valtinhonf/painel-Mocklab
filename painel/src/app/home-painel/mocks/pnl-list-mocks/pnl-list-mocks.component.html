@@ -1,0 +1,34 @@
+<div class="flex flex-column conteiner-flex pnlListMocks">
+  <div>
+    <h5>My mocks</h5>
+  </div>
+  <p-table [value]="mocksProjects" size="small" sortField="projectPublicId" dataKey="projectPublicId" rowGroupMode="subheader" groupRowsBy="projectPublicId">
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width:20%">Method</th>
+        <th style="width:60%">Name</th>
+        <th style="width:20%"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="groupheader" let-mock let-expanded="expanded">
+      <tr>
+        <td colspan="5">
+          <p-button
+            type="button"
+            pRipple
+            [pRowToggler]="mock"
+            [text]="true"
+            [rounded]="true"
+            class="mr-2"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
+          </p-button>
+          <span class="font-bold ml-2">{{mock.projectName}}</span>
+        </td></tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-mock>
+      <tr>
+        <td>{{mock.method}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
