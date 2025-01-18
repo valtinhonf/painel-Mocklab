@@ -1,0 +1,21 @@
+<div class="flex align-items-center flex-wrap justify-content-between">
+  <div id="brand" class="lg:col-2 md:col-3">
+    <a href="#">MockLab</a>
+  </div>
+
+  <div id="resources" class="flex align-items-center flex-wrap lg:col-2 md:col-3">
+    <div class="lg:col-4 md:col-6">
+      <a href="#">About</a>
+    </div>
+    <div class="lg:col-4 md:col-6">
+      <a href="#">Price</a>
+    </div>
+    <div class=" lg:col-4 md:col-6">
+      @if (this.loggedData) {
+        <a id="accessTo" href="/home">{{ this.loggedData.userShortName }}</a>
+      } @else {
+        <a id="access" href="#">Log in</a>
+      }
+    </div>
+  </div>
+</div>

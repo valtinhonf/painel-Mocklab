@@ -2,7 +2,7 @@
   <div>
     <h5>My mocks</h5>
   </div>
-  <p-table [value]="mocksProjects" size="small" sortField="projectPublicId" dataKey="projectPublicId" rowGroupMode="subheader" groupRowsBy="projectPublicId">
+  <p-table [value]="mocksProjects" size="small" sortField="projectPublicId" dataKey="projectPublicId" rowGroupMode="subheader" groupRowsBy="projectPublicId" responsiveLayout="scroll">
     <ng-template pTemplate="header">
       <tr>
         <th style="width:20%">Method</th>
@@ -11,7 +11,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="groupheader" let-mock let-expanded="expanded">
-      <tr>
+      <tr pRowGroupHeader>
         <td colspan="5">
           <p-button
             type="button"
@@ -25,7 +25,7 @@
           <span class="font-bold ml-2">{{mock.projectName}}</span>
         </td></tr>
     </ng-template>
-    <ng-template pTemplate="rowexpansion" let-mock>
+    <ng-template pTemplate="rowexpansion" let-mock let>
       <tr>
         <td>{{mock.method}}</td>
       </tr>
