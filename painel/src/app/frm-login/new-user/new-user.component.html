@@ -1,0 +1,72 @@
+
+
+<div class="flex flex-row justify-content-around ml-form mt-8">
+  <div class="col-3">
+    <h1> New user</h1>
+  </div>
+  <p-divider type="solid" layout="vertical"></p-divider>
+  <div class="col-6">
+    <form [formGroup]="frmSignupForm">
+
+      @if (this.iStep === 1) {
+
+        <div class="flex flex-column gap-2">
+          <div class="flex justify-content-end">
+            <div class="col-6 flex flex-column gap-1">
+              <label>Your e-mail</label>
+              <input pInputText label="email" formControlName="email" />
+            </div>
+          </div>
+
+          <div class="flex justify-content-end">
+            <div class="col-6 flex flex-column gap-1">
+              <label>Your name</label>
+              <input pInputText label="name" formControlName="name" />
+            </div>
+          </div>
+
+          <div class="flex justify-content-end">
+            @for (message of messagesStep1(); track message; let first = $first) {
+              <p-message icon="pi pi-times" [severity]="message.severity" [text]="message.content" />
+            }
+          </div>
+
+          <div class="flex justify-content-end gap-3 mt-5">
+              <p-button label="Cancel" severity="secondary" />
+              <p-button label="Next" severity="success" iconPos="right" icon="pi pi-arrow-right" (onClick)="this.nextStep()" />
+          </div>
+        </div>
+      } @else if (this.iStep === 2){
+        <div class="flex flex-column gap-2">
+          <div class="flex justify-content-end">
+            <div class="col-6 flex flex-column gap-1">
+              <label>Your password</label>
+              <input pInputText type="password" label="email" formControlName="password" />
+            </div>
+          </div>
+
+          <div class="flex justify-content-end">
+            <div class="col-6 flex flex-column gap-1">
+              <label>Re-type your password</label>
+              <input pInputText type="password" label="name" formControlName="retypePassword" />
+            </div>
+          </div>
+
+          <div class="flex justify-content-end">
+            @for (message of messagesStep2(); track message; let first = $first) {
+              <p-message icon="pi pi-times" [severity]="message.severity" [text]="message.content" />
+            }
+          </div>
+
+          <div class="flex justify-content-end gap-3 mt-5">
+            <p-button label="Back" severity="secondary" icon="pi pi-arrow-left" (onClick)="this.iStep = 1"/>
+            <p-button label="Finish" severity="success" iconPos="right" icon="pi pi-check" (onClick)="save()" />
+          </div>
+        </div>
+      }
+
+
+    </form>
+  </div>
+
+</div>
