@@ -22,7 +22,7 @@
                         <p-inputgroup>
                           <p-inputgroup-addon>/</p-inputgroup-addon>
                           <input pInputText formControlName="path"/>
-                          <p-button [outlined]="true" icon="pi pi-copy"></p-button>
+                          <p-button [outlined]="true" icon="pi pi-copy" (onClick)="copytoClipBoard()"></p-button>
                         </p-inputgroup>
                       </div>
                     </div>

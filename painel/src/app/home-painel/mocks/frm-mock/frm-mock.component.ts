@@ -13,6 +13,8 @@ import {MockService} from '../mock.service';
 import {MessageService} from 'primeng/api';
 import {AuthService} from '../../../frm-login/auth.service';
 import {LoggedData} from '../../../frm-login/LoggedData';
+import {Clipboard} from "@angular/cdk/clipboard";
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-frm-mock',
@@ -36,7 +38,8 @@ export class FrmMockComponent implements OnInit{
 
   frmMock!: FormGroup;
 
-  constructor(private aRoute: ActivatedRoute, private mockSrv: MockService, private messageSrv: MessageService, private authSrv: AuthService) {
+  constructor(private aRoute: ActivatedRoute, private mockSrv: MockService, private messageSrv: MessageService,
+              private authSrv: AuthService, private clipboard: Clipboard) {
     this.loggedData = authSrv.retrieveLoggedData();
     this.montaFormulario();
     this.editorOptions = new JsonEditorOptions()
@@ -91,6 +94,12 @@ export class FrmMockComponent implements OnInit{
       status: mock.status,
       createdat: mock.createdat
     })
+  }
+
+  copytoClipBoard(): void {
+    const keyToCopy = this.frmMock.controls['idproject'].value || this.frmMock.controls['iduser'].value;
+    this.clipboard.copy(`${environment.url_api}/mocklab/${keyToCopy}/${this.frmMock.controls['path'].value}`)
+    this.messageSrv.add({key:'global', severity:"success", detail: "The mock copied to clipboard successfully!"});
   }
 
   save(){
