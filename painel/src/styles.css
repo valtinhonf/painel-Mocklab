@@ -1,5 +1,6 @@
 @import "primeicons/primeicons.css";
 @import "assets/css/form.css";
+@import "jsoneditor/dist/jsoneditor.min.css";
 
 body{
   background-color: #171717;

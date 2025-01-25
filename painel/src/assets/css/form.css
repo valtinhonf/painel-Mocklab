@@ -4,3 +4,11 @@
   min-width: 100%;
   padding: 2%;
 }
+
+
+.ml-panel {
+  background-color: #3c3c3c;
+  /* width: 100%; */
+  padding: 3%;
+  border-radius: 5px;
+}

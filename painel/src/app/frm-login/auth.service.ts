@@ -19,6 +19,10 @@ export class AuthService {
     return this.http.post<LoggedData>(`${environment.url_api}/auth`, {username, password})
   }
 
+  saveNewUser(username: string, shortname: string, password: string): Observable<any> {
+    return this.http.post<LoggedData>(`${environment.url_api}/newUser/`, {username, shortname, password})
+  }
+
   storageLoggedData(loggedData: LoggedData) {
     this.loggedData = loggedData;
     localStorage.setItem('mlab_session', JSON.stringify(loggedData));
@@ -43,6 +47,22 @@ export class AuthService {
     if (localStorage.getItem('mlab_session')!=undefined) {
       this.loggedData = JSON.parse(localStorage.getItem('mlab_session') ?? "");
     } else return undefined
+  }
+
+  isLogged(): boolean {
+    return this.retrieveLoggedData() != undefined;
+  }
+
+  loggout(){
+    localStorage.removeItem('mlab_session');
+    localStorage.removeItem('mlab_username');
+    localStorage.removeItem('mlab_organizationShortName');
+    localStorage.removeItem('mlab_idPublicOrganization');
+    localStorage.removeItem('mlab_userShortName');
+    localStorage.removeItem('mlab_token');
+    localStorage.removeItem('mlab_idPublicUser');
+    localStorage.removeItem("mlab_auth");
+    this.loggedData = undefined;
   }
 
 }

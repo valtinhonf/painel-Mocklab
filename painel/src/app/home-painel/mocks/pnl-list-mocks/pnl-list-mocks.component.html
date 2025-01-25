@@ -1,18 +1,28 @@
 <div class="flex flex-column conteiner-flex pnlListMocks">
-  <div>
-    <h5>My mocks</h5>
+  <div class="flex justify-content-between">
+    <div class="sm:col-6 md:col-6 lg:col-4 xl:col-4">
+      <h5>My mocks</h5>
+    </div>
+    <div class="sm:col-6 md:col-6 md:col-4 lg:col-2 xg:col-2">
+      <!-- <p-button severity="success" label="New project" [text]="true" icon="pi pi-plus"></p-button>
+      <p-button severity="success" label="New mock" [text]="true" icon="pi pi-plus"></p-button> -->
+      <p-button severity="primary" rounded="true" (onClick)="optionPrc.toggle($event)" icon="pi pi-bars"></p-button>
+    </div>
   </div>
-  <p-table [value]="mocksProjects" size="small" sortField="projectPublicId" dataKey="projectPublicId" rowGroupMode="subheader" groupRowsBy="projectPublicId" responsiveLayout="scroll">
+  <p-table [value]="mocksProjects" size="small" sortField="projectPublicId" dataKey="projectPublicId"
+           rowGroupMode="subheader" groupRowsBy="projectPublicId" responsiveLayout="scroll">
     <ng-template pTemplate="header">
-      <tr>
+      <tr style="font-size: small;">
         <th style="width:20%">Method</th>
         <th style="width:60%">Name</th>
+        <th style="width:20%"></th>
         <th style="width:20%"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="groupheader" let-mock let-expanded="expanded">
-      <tr pRowGroupHeader>
+      <tr pRowGroupHeader style="font-size: normal;">
         <td colspan="5">
+          <div class="flex justify-content-between">
           <p-button
             type="button"
             pRipple
@@ -22,13 +32,26 @@
             class="mr-2"
             [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
           </p-button>
-          <span class="font-bold ml-2">{{mock.projectName}}</span>
+            <span class="font-bold ml-2">{{mock.projectName ?? 'Unknow group'}}  </span>
+            <p-button severity="info" size="small" [text]="true" icon="pi pi-pencil"></p-button>
+          </div>
         </td></tr>
     </ng-template>
-    <ng-template pTemplate="rowexpansion" let-mock let>
+    <ng-template pTemplate="expandedrow" let-mock>
       <tr>
         <td>{{mock.method}}</td>
+        <td>{{mock.name}}</td>
+        <td>{{mock.statusCodeResponse}}</td>
+        <td><p-button severity="info" [text]="true" icon="pi pi-eye" (onClick)="viewMock(mock.idmockpublic)"></p-button></td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
+<p-popover #optionPrc>
+  <div class="flex flex-column conteiner-flex gap-3 w-[5rem]">
+    <p-button severity="primary" [text]="true" icon="pi pi-plus" label="New project"></p-button>
+    <p-button severity="primary" [text]="true" icon="pi pi-plus" label="New mock" (onClick)="newMock($event, optionPrc)"></p-button>
+  </div>
+</p-popover>
+

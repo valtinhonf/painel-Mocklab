@@ -10,5 +10,6 @@ export interface MockProject {
   projectidsequence: number;
   projectname: string;
   projectDescription: string;
+  statusCodeResponse: number;
 
 }

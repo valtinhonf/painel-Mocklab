@@ -31,7 +31,9 @@
               "./node_modules/primeflex/primeflex.scss",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jsoneditor/dist/jsoneditor.js"
+            ]
           },
           "configurations": {
             "production": {

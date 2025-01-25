@@ -12,10 +12,20 @@
     </div>
     <div class=" lg:col-4 md:col-6">
       @if (this.loggedData) {
-        <a id="accessTo" href="/home">{{ this.loggedData.userShortName }}</a>
+        <button class="usrBtn" (click)="userMenu.toggle($event)">{{ this.loggedData.userShortName }}</button>
       } @else {
         <a id="access" href="#">Log in</a>
       }
     </div>
   </div>
 </div>
+
+
+<p-popover #userMenu>
+  <div class="flex flex-column conteiner-flex gap-1 w-[5rem]">
+    <p-button severity="contrast" [text]="true" icon="pi pi-pencil" label="My info"></p-button>
+    <p-button severity="contrast" [text]="true" icon="pi pi-pencil" label="Organization's info"></p-button>
+    <hr>
+    <p-button severity="warn" [text]="true" icon="pi pi-sign-out" iconPos="right" label="Log out" (onClick)="logout($event, userMenu)"></p-button>
+  </div>
+</p-popover>

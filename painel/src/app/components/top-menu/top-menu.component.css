@@ -10,3 +10,16 @@ a:hover{
 #access{
   font-weight: bold;
 }
+
+.usrBtn {
+  background: none; /* Remove o fundo padrão do botão */
+  border: none; /* Remove a borda padrão do botão */
+  color: white; /* Cor padrão de links */
+  cursor: pointer; /* Define o cursor como pointer */
+  font: inherit; /* Herda as propriedades de fonte do contexto */
+  padding: 1; /* Remove qualquer padding padrão */
+}
+
+.usrBtn:hover {
+  font-weight: bold;
+}
