@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
-import {MockProject} from './MockProject';
+import {environment} from '../../../../environments/environment';
+import {MockProject} from '../models/MockProject';
 import {Observable, Subscription} from 'rxjs';
-import { Mock } from './models/Mock';
+import { Mock } from '../models/Mock';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +23,14 @@ export class MockService {
   }
 
   save(mock: Mock){
-    if (mock.idmockpublic!= ''){
+    if (mock.idmockpublic && mock.idmockpublic!= '') {
       return this.http.put<Mock>(`${environment.url_api}/mock`, mock)
     } else {
       return this.http.post<Mock>(`${environment.url_api}/mock`, mock)
     }
+  }
+
+  deleteMock(idUser: string, idMock: string){
+    return this.http.delete<Mock>(`${environment.url_api}/mock/${idUser}/${idMock}`)
   }
 }

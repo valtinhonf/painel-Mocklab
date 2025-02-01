@@ -12,4 +12,5 @@ export interface Mock {
     observation: string;
     status:string;
     createdat: Date;
+    updatedat: Date;
 }

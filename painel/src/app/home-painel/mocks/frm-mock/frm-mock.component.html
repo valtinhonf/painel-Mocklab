@@ -56,16 +56,32 @@
                     <p-tab value="1" [disabled]="this.frmMock.controls['method'].value == 'GET'">Post validation schema</p-tab>
                     <p-tab value="2">History</p-tab>
                     <p-tab value="3">More options</p-tab>
+                    <p-tab value="4">More Info</p-tab>
                   </p-tablist>
                   <p-tabpanels>
                     <p-tabpanel value="0" >
 
-                        <json-editor [options]="editorOptions" formControlName="responseBody"></json-editor>
+                        <json-editor id="responseBody" [options]="editorOptions_ResponseBody" formControlName="responseBody"></json-editor>
 
                     </p-tabpanel>
                     <p-tabpanel value="1" >
 
-                      <json-editor [options]="editorOptions" formControlName="postSchemaRequest"></json-editor>
+                      <json-editor id="postSchemaRequest" [options]="editorOptions_PostSchemaValidation" formControlName="postSchemaRequest" ></json-editor>
+
+                    </p-tabpanel>
+
+                    <p-tabpanel value="4" >
+
+                      <div class="flex flex-row justify-content-end">
+                        <div class="col-3 flex flex-column gap-1">
+                          <label>Created at</label>
+                          {{this.frmMock.controls['createdat'].value | date: 'dd/MM/yyyy HH:mm:ss'}}
+                        </div>
+                        <div class="col-3 flex flex-column gap-1">
+                          <label>Updatedat at</label>
+                          {{this.frmMock.controls['updatedat'].value | date: 'dd/MM/yyyy HH:mm:ss'}}
+                        </div>
+                      </div>
 
                     </p-tabpanel>
                   </p-tabpanels>

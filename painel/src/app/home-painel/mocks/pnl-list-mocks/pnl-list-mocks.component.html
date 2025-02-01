@@ -9,49 +9,110 @@
       <p-button severity="primary" rounded="true" (onClick)="optionPrc.toggle($event)" icon="pi pi-bars"></p-button>
     </div>
   </div>
-  <p-table [value]="mocksProjects" size="small" sortField="projectPublicId" dataKey="projectPublicId"
-           rowGroupMode="subheader" groupRowsBy="projectPublicId" responsiveLayout="scroll">
-    <ng-template pTemplate="header">
-      <tr style="font-size: small;">
-        <th style="width:20%">Method</th>
-        <th style="width:60%">Name</th>
-        <th style="width:20%"></th>
-        <th style="width:20%"></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="groupheader" let-mock let-expanded="expanded">
-      <tr pRowGroupHeader style="font-size: normal;">
-        <td colspan="5">
-          <div class="flex justify-content-between">
-          <p-button
-            type="button"
-            pRipple
-            [pRowToggler]="mock"
-            [text]="true"
-            [rounded]="true"
-            class="mr-2"
-            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
-          </p-button>
-            <span class="font-bold ml-2">{{mock.projectName ?? 'Unknow group'}}  </span>
-            <p-button severity="info" size="small" [text]="true" icon="pi pi-pencil"></p-button>
-          </div>
-        </td></tr>
-    </ng-template>
-    <ng-template pTemplate="expandedrow" let-mock>
-      <tr>
-        <td>{{mock.method}}</td>
-        <td>{{mock.name}}</td>
-        <td>{{mock.statusCodeResponse}}</td>
-        <td><p-button severity="info" [text]="true" icon="pi pi-eye" (onClick)="viewMock(mock.idmockpublic)"></p-button></td>
-      </tr>
-    </ng-template>
-  </p-table>
+  <div>
+    <p-tabs>
+      <p-tablist>
+        <p-tab value="0">Your mocks</p-tab>
+        <p-tab value="1">Your projects</p-tab>
+      </p-tablist>
+      <p-tabpanels>
+        <p-tabpanel value="0">
+          <p-table [value]="mocksProjects" size="small" sortField="projectPublicId" dataKey="projectPublicId"
+             rowGroupMode="subheader" groupRowsBy="projectPublicId" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+              <tr style="font-size: small;">
+                <th style="width:20%">Method</th>
+                <th style="width:60%">Name</th>
+                <th style="width:20%"></th>
+                <th style="width:20%"></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="4">Nenhum mock encontrado.</td>
+              </tr>
+            </ng-template>
+      <ng-template pTemplate="groupheader" let-mock let-expanded="expanded">
+        <tr pRowGroupHeader style="font-size: normal;">
+          <td colspan="5">
+            <div class="flex justify-content-between">
+            <p-button
+              type="button"
+              pRipple
+              [pRowToggler]="mock"
+              [text]="true"
+              [rounded]="true"
+              class="mr-2"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
+            </p-button>
+              <span class="font-bold ml-2">{{mock.projectName ?? 'Unknow group'}}  </span>
+              <p-button severity="info" size="small" [text]="true" icon="pi pi-cog" (onClick)="this.idProjectSelected = mock.projectPublicId; optionProject.toggle($event)"></p-button>
+            </div>
+          </td></tr>
+      </ng-template>
+      <ng-template pTemplate="expandedrow" let-mock>
+        <ng-container *ngIf="mock.name != undefined && mock.name != ''; else emptyMockRow">
+          <tr >
+            <td>{{ mock.method }}</td>
+            <td>{{ mock.name }}</td>
+            <td>{{ mock.statusCodeResponse }}</td>
+            <td>
+              <p-button severity="info" [text]="true" icon="pi pi-cog"
+                        (click)="mockSelected = mock; optionMock.toggle($event)">
+              </p-button>
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-template #emptyMockRow>
+          <tr>
+            <td colspan="4"><p-button severity="success" [text]="true" icon="pi pi-plus" label="New mock in this project" size="small"
+                                      (onClick)="newMock($event, optionPrc, mock.projectPublicId)"></p-button></td>
+          </tr>
+        </ng-template>
+      </ng-template>
+    </p-table>
+        </p-tabpanel>
+        <p-tabpanel value="1">
+          <p-table [value]="projects" size="small">
+            <ng-template pTemplate="header">
+              <tr style="font-size: small;">
+                <th style="width:80%">Name</th>
+                <th style="width:20%"></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-project>
+              <tr>
+                <td>{{project.name}}</td>
+                <td></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabpanel>
+        </p-tabpanels>
+    </p-tabs>
+  </div>
 </div>
 
 <p-popover #optionPrc>
   <div class="flex flex-column conteiner-flex gap-3 w-[5rem]">
-    <p-button severity="primary" [text]="true" icon="pi pi-plus" label="New project"></p-button>
-    <p-button severity="primary" [text]="true" icon="pi pi-plus" label="New mock" (onClick)="newMock($event, optionPrc)"></p-button>
+    <p-button severity="primary" [text]="true" icon="pi pi-plus" label="New project" (onClick)="newProject($event, optionPrc)"></p-button>
+    <p-button severity="primary" [text]="true" icon="pi pi-plus" label="New mock" (onClick)="newMock($event, optionPrc, '')"></p-button>
   </div>
 </p-popover>
+
+<p-popover #optionMock>
+  <div class="flex flex-column conteiner-flex gap-3 w-[3rem]">
+    <p-button severity="primary" [text]="true" icon="pi pi-eye" label="View" (onClick)="viewMock(mockSelected.idmockpublic)"></p-button>
+    <p-button severity="danger" [text]="true" icon="pi pi-trash" label="Delete" (onClick)="deleteMock($event, optionMock)"></p-button>
+  </div>
+</p-popover>
+
+<p-popover #optionProject>
+  <div class="flex flex-column conteiner-flex gap-3 w-[5rem]">
+    <p-button severity="primary" [text]="true" icon="pi pi-plus" label="New mock" (onClick)="newMock($event, optionPrc, this.idProjectSelected)"></p-button>
+  </div>
+</p-popover>
+
+<p-confirmpopup />
 

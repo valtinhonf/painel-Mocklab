@@ -1,5 +1,4 @@
-export interface Project {
-    idproject: string;
+export interface NewProject {
     idorganization: string;
     name: string;
     description?: string;
