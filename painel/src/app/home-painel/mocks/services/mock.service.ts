@@ -33,4 +33,8 @@ export class MockService {
   deleteMock(idUser: string, idMock: string){
     return this.http.delete<Mock>(`${environment.url_api}/mock/${idUser}/${idMock}`)
   }
+
+  loadLogs(idMock: string){
+    return this.http.get<any[]>(`${environment.url_api}/mocks/logs/${idMock}`)
+  }
 }

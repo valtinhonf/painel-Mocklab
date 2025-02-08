@@ -9,6 +9,7 @@ export const routes: Routes = [
   {path: 'login', component: FrmLoginComponent},
   {path: 'signup', component: NewUserComponent},
   {path: 'painel', component: HomePainelComponent, children: [
-    {path: 'mock',  loadChildren: () => import('./home-painel/mocks/mocks.module').then(m => m.MocksModule)}
+    {path: 'mock',  loadChildren: () => import('./home-painel/mocks/mocks.module').then(m => m.MocksModule)},
+    {path: 'user',  loadChildren: () => import('./home-painel/users/users.module').then(m => m.UsersModule)}
     ]}
 ];

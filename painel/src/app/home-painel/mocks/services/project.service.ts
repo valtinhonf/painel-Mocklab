@@ -16,8 +16,16 @@ export class ProjectService {
     return this.http.post<Project>(`${environment.url_api}/project/`, newProject)
   }
 
+  update(project: Project) {
+    return this.http.put<Project>(`${environment.url_api}/project/`, project)
+  }
+
   getById(idProject: string) {
     return this.http.get<Project>(`${environment.url_api}/project/${idProject}`)
+  }
+
+  deleteById(idUser: string, idProject: string) {
+    return this.http.delete(`${environment.url_api}/project/${idProject}`)
   }
 
   listAllProjectsByOrganization(idOrganization: string) {

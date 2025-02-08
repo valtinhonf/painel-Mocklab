@@ -50,27 +50,49 @@
               <div class="flex flex-row">
                 <div class="col-12">
 
-                <p-tabs>
+                <p-tabs [value]="tabSelected" >
                   <p-tablist>
-                    <p-tab value="0">Response body</p-tab>
-                    <p-tab value="1" [disabled]="this.frmMock.controls['method'].value == 'GET'">Post validation schema</p-tab>
-                    <p-tab value="2">History</p-tab>
-                    <p-tab value="3">More options</p-tab>
-                    <p-tab value="4">More Info</p-tab>
+                    <p-tab [value]="0">Response body</p-tab>
+                    <p-tab [value]="1" [disabled]="this.frmMock.controls['method'].value == 'GET'">Post validation schema</p-tab>
+                    <p-tab [value]="2" (valueChange)="loadLogs()" (select)="loadLogs()" (load)="loadLogs()" (change)="loadLogs()">History</p-tab>
+                    <p-tab [value]="3">More options</p-tab>
+                    <p-tab [value]="4">More Info</p-tab>
                   </p-tablist>
-                  <p-tabpanels>
-                    <p-tabpanel value="0" >
+                  <p-tabpanels >
+                    <p-tabpanel [value]="0" >
 
                         <json-editor id="responseBody" [options]="editorOptions_ResponseBody" formControlName="responseBody"></json-editor>
 
                     </p-tabpanel>
-                    <p-tabpanel value="1" >
+                    <p-tabpanel [value]="1" >
 
                       <json-editor id="postSchemaRequest" [options]="editorOptions_PostSchemaValidation" formControlName="postSchemaRequest" ></json-editor>
 
                     </p-tabpanel>
+                    <p-tabpanel [value]="2" >
+                      <div class="flex flex-row justify-content-between">
+                        <label class="font-medium">Call's history</label>
+                        <p-button label="refresh logs" [text]="true" icon="pi pi-refresh" (onClick)="loadLogs()" />
+                      </div>
+                      <div class="flex flex-row justify-content-start">
+                        <p-table [value]="logs" [tableStyle]="{ 'min-width': '50rem' }">
+                          <ng-template #header>
+                            <tr>
+                              <th>Date time</th>
+                              <th>Execution status</th>
+                            </tr>
+                          </ng-template>
+                          <ng-template #body let-log>
+                            <tr>
+                              <td>{{ log.logdate | date: 'yyyy-MM-dd HH:mm' }}</td>
+                              <td>{{ log.statusresponse }}</td>
+                            </tr>
+                          </ng-template>
+                        </p-table>
+                      </div>
 
-                    <p-tabpanel value="4" >
+                    </p-tabpanel>
+                    <p-tabpanel [value]="4" >
 
                       <div class="flex flex-row justify-content-end">
                         <div class="col-3 flex flex-column gap-1">

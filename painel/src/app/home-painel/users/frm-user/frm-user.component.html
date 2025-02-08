@@ -1,0 +1,48 @@
+<div class="ml-panel">
+  <form [formGroup]="frmUser">
+    <div class="flex flex-column gap-2">
+      <div class="flex justify-content-between">
+        <div class="sm:col-6 md:col-6 lg:col-4 xl:col-4">
+          <h5>Your data</h5>
+        </div>
+        <div class="sm:col-6 md:col-6 md:col-4 lg:col-1 xg:col-1">
+          <p-button severity="success" label="Save" icon="pi pi-save" (onClick)="save()"></p-button>
+          <!-- <p-button severity="primary" rounded="true" (onClick)="optionPrc.toggle($event)" icon="pi pi-bars"></p-button> -->
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-column gap-2">
+        <div class="flex flex-row">
+          <div class="col-7 flex flex-column gap-1">
+            <label>Username</label>
+            <p-input-group>
+
+              @if (changingUsername) {
+                <input pInputText type="email" formControlName="username" >
+                <p-button icon="pi pi-check" (onClick)="changingUsername = false; confirmChangeUsername()"></p-button>
+              } @else {
+                <input pInputText type="email" formControlName="username" readonly>
+                <p-button icon="pi pi-pencil" outlined text (onClick)="changingUsername = true;"></p-button>
+
+              }
+            </p-input-group>
+          </div>
+          <div class="col-5 flex flex-column gap-1">
+            <label>Shortname</label>
+            <input pInputText formControlName="shortname" />
+          </div>
+        </div>
+    </div>
+
+    <div class="flex flex-column gap-2">
+      <div class="flex flex-column gap-2">
+        <div class="flex flex-row">
+          <div class="col-8 flex flex-column gap-1">
+            <label>Fullname</label>
+            <input pInputText formControlName="fullname">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

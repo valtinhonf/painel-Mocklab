@@ -20,11 +20,12 @@ import { isObjectNotEmpty } from '../../../utils/Functions';
 import {Popover} from 'primeng/popover';
 import {ProjectService} from '../services/project.service';
 import {Project} from '../models/Project';
+import {TableModule} from 'primeng/table';
 
 @Component({
   selector: 'app-frm-mock',
   imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputGroupModule, InputGroupAddonModule, DropdownModule,
-    TabsModule, JsonEditorComponent, DatePipe, Popover],
+    TabsModule, JsonEditorComponent, DatePipe, Popover, TableModule],
   standalone: true,
   templateUrl: './frm-mock.component.html',
   styleUrl: './frm-mock.component.css'
@@ -38,6 +39,9 @@ export class FrmMockComponent implements OnInit{
 
   public editorOptions_ResponseBody: JsonEditorOptions;
   public editorOptions_PostSchemaValidation: JsonEditorOptions;
+
+  tabSelected: number = 0;
+  logs: any[] = []
 
   loggedData: LoggedData|undefined;
 
@@ -61,6 +65,7 @@ export class FrmMockComponent implements OnInit{
 
   ngOnInit(): void {
     this.aRoute.params.subscribe(params => {
+      this.logs = []
       if (params['idProject'] != undefined && params['idProject'] != '' && params['id'] == '0') {
         this.projectSrv.getById(params['idProject']).subscribe(res => {
           this.projectSelected = res;
@@ -140,6 +145,13 @@ export class FrmMockComponent implements OnInit{
         this.messageSrv.add({key:'global', severity:"success", detail: "The mock " + this.frmMock.controls['name'].value + " was saved successfully!"});
         this.mockSavedEvent.emit(res);
       })
+    }
+  }
+
+  loadLogs(){
+    console.log(this.tabSelected);
+    if (this.frmMock.controls['idmockpublic'].value){
+      this.mockSrv.loadLogs(this.frmMock.controls['idmockpublic'].value).subscribe(logs => this.logs = logs);
     }
   }
 

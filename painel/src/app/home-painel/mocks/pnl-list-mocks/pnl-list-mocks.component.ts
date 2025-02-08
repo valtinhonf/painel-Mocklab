@@ -14,6 +14,10 @@ import {ProjectService} from '../services/project.service';
 import {Project} from '../models/Project';
 import {isObjectNotEmpty} from '../../../utils/Functions';
 import {NgIf} from '@angular/common';
+import {Tooltip} from 'primeng/tooltip';
+import {Divider} from 'primeng/divider';
+import {Chip} from 'primeng/chip';
+import {Tag} from 'primeng/tag';
 
 @Component({
   selector: 'app-pnl-list-mocks',
@@ -27,7 +31,11 @@ import {NgIf} from '@angular/common';
     TabList,
     Tab,
     TabPanels,
-    TabPanel
+    TabPanel,
+    Tooltip,
+    Divider,
+    Chip,
+    Tag
   ],
   templateUrl: './pnl-list-mocks.component.html',
   styleUrl: './pnl-list-mocks.component.css'
@@ -111,10 +119,47 @@ export class PnlListMocksComponent implements OnInit {
     });
   }
 
+  deleteProject(event: Event, element: any){
+    element.hide(event)
+    this.confirmDeleteProject(event)
+  }
+
+  confirmDeleteProject(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Do you want to delete this project?',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancel',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Delete',
+        severity: 'danger'
+      },
+      accept: () => {
+        if (this.loggedData) {
+          this.projectSrv.deleteById(this.loggedData.idPublicUser, this.idProjectSelected).subscribe(res => {
+            this.messageService.add({key:'global', severity: 'info', summary: 'Confirmed', detail: 'Project deleted', life: 3000 });
+          }, error => {
+            this.messageService.add({key:'global', severity: 'error', summary: 'Error', detail: 'An error occurred trying to delete this project!', life: 3000 });
+          })
+        }
+      },
+      reject: () => {
+        return
+      }
+    });
+  }
+
   newProject(event: Event, element: any){
     element.hide(event)
     this.router.navigate(['/painel/mock/project/d/0']);
   }
 
-  protected readonly isObjectNotEmpty = isObjectNotEmpty;
+  editProject(event: Event, element: any, idProject: string){
+    element.hide(event)
+    this.router.navigate(['/painel/mock/project/d/'+ idProject]);
+  }
 }

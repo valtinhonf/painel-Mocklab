@@ -39,4 +39,14 @@ export class TopMenuComponent implements OnInit {
       this.ngOnInit();
     }
 
+    goToYourOrganization(event: Event, element: any){
+      element.hide(event)
+      this.router.navigate(['/painel/user/organization']);
+    }
+
+  goToUserData(event: Event, element: any){
+    element.hide(event)
+    this.router.navigate(['/painel/user/user']);
+  }
+
 }

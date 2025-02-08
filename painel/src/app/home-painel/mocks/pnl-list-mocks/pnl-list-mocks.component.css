@@ -4,3 +4,15 @@
   padding: 3%;
   border-radius: 5px;
 }
+
+:host ::ng-deep .p-chip.delete {
+  font-size: 0.75rem;
+  background: #ff9d9d;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #be0000;
+  opacity: 80%;
+  justify-content: center;
+  color: #610000;
+  width: 100%;
+}

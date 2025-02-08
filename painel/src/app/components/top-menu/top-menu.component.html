@@ -23,8 +23,8 @@
 
 <p-popover #userMenu>
   <div class="flex flex-column conteiner-flex gap-1 w-[5rem]">
-    <p-button severity="contrast" [text]="true" icon="pi pi-pencil" label="My info"></p-button>
-    <p-button severity="contrast" [text]="true" icon="pi pi-pencil" label="Organization's info"></p-button>
+    <p-button severity="contrast" [text]="true" icon="pi pi-pencil" label="My info" (onClick)="goToUserData($event, userMenu)"></p-button>
+    <p-button severity="contrast" [text]="true" icon="pi pi-pencil" label="Organization's info" (onClick)="goToYourOrganization($event, userMenu)"></p-button>
     <hr>
     <p-button severity="warn" [text]="true" icon="pi pi-sign-out" iconPos="right" label="Log out" (onClick)="logout($event, userMenu)"></p-button>
   </div>

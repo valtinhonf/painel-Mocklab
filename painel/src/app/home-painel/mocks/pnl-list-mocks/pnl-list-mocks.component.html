@@ -10,7 +10,7 @@
     </div>
   </div>
   <div>
-    <p-tabs>
+    <p-tabs value="0">
       <p-tablist>
         <p-tab value="0">Your mocks</p-tab>
         <p-tab value="1">Your projects</p-tab>
@@ -46,14 +46,21 @@
               [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
             </p-button>
               <span class="font-bold ml-2">{{mock.projectName ?? 'Unknow group'}}  </span>
-              <p-button severity="info" size="small" [text]="true" icon="pi pi-cog" (onClick)="this.idProjectSelected = mock.projectPublicId; optionProject.toggle($event)"></p-button>
+              <p-button [disabled] = "!mock.projectName" severity="info" size="small" [text]="true" icon="pi pi-cog" (onClick)="this.idProjectSelected = mock.projectPublicId; optionProject.toggle($event)" pTooltip="Options"></p-button>
             </div>
           </td></tr>
       </ng-template>
       <ng-template pTemplate="expandedrow" let-mock>
         <ng-container *ngIf="mock.name != undefined && mock.name != ''; else emptyMockRow">
           <tr >
-            <td>{{ mock.method }}</td>
+            <td>
+                <p-tag severity="danger" value="DEL" [style]="{border: '1px solid'}" *ngIf="mock.method == 'DELETE'" />
+                <p-tag value="GET" [style]="{border: '1px solid'}" *ngIf="mock.method == 'GET'" />
+                <p-tag severity="info" value="POST" [style]="{border: '1px solid'}" *ngIf="mock.method == 'POST'" />
+                <p-tag severity="warn" value="PUT" [style]="{border: '1px solid'}" *ngIf="mock.method == 'PUT'" />
+                <p-tag severity="secondary" value="OPTIONS" [style]="{border: '1px solid'}" *ngIf="mock.method == 'OPTIONS'" />
+
+            </td>
             <td>{{ mock.name }}</td>
             <td>{{ mock.statusCodeResponse }}</td>
             <td>
@@ -84,6 +91,7 @@
             <ng-template pTemplate="body" let-project>
               <tr>
                 <td>{{project.name}}</td>
+                <td><p-button severity="info" size="small" [text]="true" icon="pi pi-cog" (onClick)="this.idProjectSelected = project.idproject; optionProject.toggle($event)" pTooltip="Options"></p-button></td>
                 <td></td>
               </tr>
             </ng-template>
@@ -110,9 +118,13 @@
 
 <p-popover #optionProject>
   <div class="flex flex-column conteiner-flex gap-3 w-[5rem]">
-    <p-button severity="primary" [text]="true" icon="pi pi-plus" label="New mock" (onClick)="newMock($event, optionPrc, this.idProjectSelected)"></p-button>
+    <p-button severity="primary" [text]="true" icon="pi pi-plus" label="New mock" (onClick)="newMock($event, optionProject, this.idProjectSelected)"></p-button>
+    <p-divider />
+    <p-button severity="primary" [text]="true" icon="pi pi-pencil" label="Edit project" (onClick)="editProject($event, optionProject, this.idProjectSelected)"></p-button>
+    <p-button severity="danger" [text]="true" icon="pi pi-trash" label="Delete project" (onClick)="deleteProject($event, optionProject)"></p-button>
   </div>
 </p-popover>
 
 <p-confirmpopup />
+
 
